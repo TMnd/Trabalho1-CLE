@@ -41,11 +41,9 @@ public class Sorting {
     
         public void map (Object key, Text value, Context context) throws IOException, InterruptedException{
             String line = value.toString();
-            log.info("ler linhas map: " + line);
             word.set(line);
             wordk.set("");
             context.write(wordk,word);
-
         }
     }
     
@@ -53,11 +51,6 @@ public class Sorting {
         private Text resultado = new Text();
         
         private ArrayList sorting(ArrayList<String> ar) { 
-            /*for(String valores: ar){
-                log.info("valores na função sorting: " + valores);
-            }*/
-
-            // Sorting
             Collections.sort(ar, new Comparator<String>() {
                 @Override
                 public int compare(String s1, String s2)  {
@@ -73,26 +66,15 @@ public class Sorting {
             ArrayList<String> listaSorted = new ArrayList<>();
             for(Text valores : values){
                 String line = valores.toString();
-                log.info("key: " + key + " || ler linhas reduce: " + line); 
                 lista.add(line);
             }
             
             listaSorted=sorting(lista);
             
             for(String valores : listaSorted){
-                log.info("VALORES SORTED? : " + valores);
                 resultado.set(valores);
                 context.write(resultado,key);
             }
-            
-            /*int sum =0;
-
-            for (IntWritable val : values) {
-                sum += val.get();
-            }*/
-            
-            /*resultado.set(line);
-            context.write(resultado,nw);*/
         }
     }
     
